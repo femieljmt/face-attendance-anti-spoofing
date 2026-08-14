@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments (rebuild from requirements.txt)
+.venv/
+venv/
+env/
+ENV/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Private / runtime biometric data
+# Real student rosters, attendance logs, session reports, and face datasets
+/database/*.csv
+!/database/*.example.csv
+/database/attendance_sessions/
+/dataset/recognition/
+
+# Private recognition metadata and trained biometric models
+/models/*.h5
+/models/class_indices_*.json
+!/models/class_indices.example.json
+
+# Generated exports
+*.xlsx
+*.log
+*.tmp
+
+# Local archives / backups
+*.zip
+*.tar
+*.tar.gz
+*_backup_*

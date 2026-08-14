@@ -1,0 +1,7 @@
+{
+  "threshold": 0.40150365233421326,
+  "class_0": "real",
+  "class_1": "spoof",
+  "meaning": "probability >= threshold means spoof",
+  "split": "stratified per class"
+}

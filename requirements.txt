@@ -1,0 +1,7 @@
+# Direct runtime dependencies inferred from the supplied source code.
+# Exact versions were not recoverable because the original virtual environment was not included.
+numpy
+opencv-python
+mediapipe
+tensorflow
+openpyxl
