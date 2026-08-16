@@ -1,10 +1,8 @@
-# Model Files
+# Model yang Dibutuhkan
 
-The original package contained trained face-recognition models and class-index mappings tied to identifiable students. Those files are intentionally excluded from this public-ready package.
+Model pengenalan wajah dan file indeks kelas asli tidak dimasukkan ke repository karena terhubung dengan identitas mahasiswa. Sebelum menjalankan recognition, salin model milik proyek ke folder ini.
 
-## Expected private model files
-
-Place your working model files locally in this directory before running recognition:
+Nama file yang dibaca aplikasi:
 
 ```text
 models/
@@ -20,8 +18,6 @@ models/
 └── class_indices_psd.json
 ```
 
-`*.h5` and real `class_indices_*.json` files are ignored by Git in this package.
+File `*.h5` dan `class_indices_*.json` asli dikecualikan melalui `.gitignore`. File `class_indices.example.json` hanya menunjukkan format JSON menggunakan identitas fiktif.
 
-`class_indices.example.json` demonstrates the expected JSON structure using fictional identities.
-
-The anti-spoofing threshold JSON is included because the supplied file contained no student identity data. Model licensing and dataset provenance should still be verified before publishing any trained model binary.
+`anti_spoofing_threshold.json` tetap disertakan karena file yang tersedia tidak memuat identitas mahasiswa. Sebelum model biner lain dipublikasikan, pastikan asal dataset, izin penggunaan, dan ketentuan lisensinya sudah jelas.
