@@ -1,8 +1,8 @@
-# Recognition Dataset
+# Dataset Pengenalan Wajah
 
-Real face images are intentionally excluded from this public-ready package.
+Foto wajah yang digunakan saat pengembangan tidak dipublikasikan pada repository ini. Dataset harus disiapkan sendiri pada komputer yang menjalankan proyek.
 
-At runtime the project expects recognition data under:
+Susunan folder yang dibaca aplikasi:
 
 ```text
 dataset/
@@ -13,10 +13,10 @@ dataset/
     └── PSD/
 ```
 
-Each identity may be represented by a subdirectory matching the label used by the recognition model, for example:
+Di dalam setiap kelas, satu identitas dapat ditempatkan pada folder yang labelnya sesuai dengan pemetaan model. Contoh dengan identitas fiktif:
 
 ```text
-dataset/recognition/PCD/STUDENT001_Sample_Student/
+dataset/recognition/PCD/STUDENT001_Contoh_Mahasiswa/
 ```
 
-Do not publish face datasets without an appropriate legal basis and participant permission.
+Nama folder dan `class_indices` harus konsisten dengan model recognition yang digunakan. Jangan mempublikasikan dataset wajah tanpa izin peserta dan dasar penggunaan data yang sesuai.

@@ -1,13 +1,15 @@
-# Runtime Database Directory
+# Data Mahasiswa dan Hasil Absensi
 
-This directory is intentionally distributed without real student or attendance data.
+Folder ini digunakan aplikasi untuk membaca daftar mahasiswa dan menyimpan hasil absensi. Data asli tidak disertakan karena dapat memuat nama, nomor mahasiswa, hasil recognition, waktu kehadiran, dan informasi sesi.
 
-The application may create files such as:
+Saat dijalankan, aplikasi dapat membuat atau menggunakan:
 
-- `mahasiswa_gui.csv`
-- `absensi_runtime.csv`
-- `attendance_sessions/`
+```text
+mahasiswa_gui.csv
+absensi_runtime.csv
+attendance_sessions/
+```
 
-These files can contain names, student identifiers, recognition results, timestamps, and attendance information. They are ignored by Git and should not be committed to a public repository.
+Gunakan `mahasiswa_gui.example.csv` untuk melihat susunan kolom yang dibutuhkan. Salin file tersebut menjadi file lokal, lalu isi hanya dengan data yang memang diizinkan untuk digunakan.
 
-Use `mahasiswa_gui.example.csv` only as a schema example.
+File data runtime sudah dikecualikan melalui `.gitignore` dan tidak boleh dimasukkan ke repository publik.
