@@ -1,13 +1,15 @@
-# Privacy and Publication Notes
+# Catatan Privasi Data
 
-This project processes facial images and attendance records. A public repository should contain source code and non-sensitive examples, not identifiable student data.
+Proyek ini memproses citra wajah dan catatan kehadiran. Karena keduanya dapat mengidentifikasi seseorang, repository publik hanya memuat source code dan contoh yang tidak menggunakan identitas nyata.
 
-The following materials from the development workspace should remain private unless every relevant publication requirement has been satisfied:
+File berikut harus tetap disimpan secara privat, kecuali publikasinya sudah mendapat izin dan memenuhi ketentuan yang berlaku:
 
-- face image datasets;
-- student rosters containing real names or student identifiers;
-- attendance logs and session reports;
-- class-index mappings that directly identify students;
-- trained face-recognition models derived from identifiable participants.
+- dataset foto wajah;
+- daftar mahasiswa yang memuat nama atau nomor identitas;
+- log absensi dan laporan sesi;
+- file indeks kelas yang menghubungkan label model dengan mahasiswa;
+- model pengenalan wajah yang dilatih dari data peserta.
 
-A model file does not visibly list the original images, but a face-recognition model is still derived from biometric training data. Treat it as sensitive project material unless its publication is clearly authorized.
+Model terlatih memang tidak menampilkan foto sumber secara langsung, tetapi model tersebut tetap dibuat dari data biometrik. Karena itu, saya tidak menyertakan model pengenalan wajah dan pemetaan identitas asli pada repository ini.
+
+Jika proyek dipakai kembali, gunakan data yang sudah mendapat persetujuan, batasi akses ke file lokal, dan hindari menampilkan identitas peserta pada screenshot atau contoh publik.
