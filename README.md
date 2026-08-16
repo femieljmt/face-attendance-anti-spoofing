@@ -1,4 +1,4 @@
-#Sistem Absensi Wajah dengan Liveness dan Anti-Spoofing
+# Sistem Absensi Wajah dengan Liveness dan Anti-Spoofing
 
 Repository ini berisi proyek Pengolahan Citra Digital yang saya kerjakan untuk membuat sistem absensi berbasis pengenalan wajah. Selain mengenali identitas, sistem juga memakai liveness challenge dan model anti-spoofing untuk mengurangi kemungkinan absensi menggunakan foto wajah.
 
