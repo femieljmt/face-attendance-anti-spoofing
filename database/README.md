@@ -1,8 +1,8 @@
-# Data Mahasiswa dan Hasil Absensi
+# Student Records and Attendance Output
 
-Folder ini digunakan aplikasi untuk membaca daftar mahasiswa dan menyimpan hasil absensi. Data asli tidak disertakan karena dapat memuat nama, nomor mahasiswa, hasil recognition, waktu kehadiran, dan informasi sesi.
+The application uses this directory to read the student roster and store attendance results. Real data is not included because these files may contain names, student identification numbers, recognition results, timestamps, and session details.
 
-Saat dijalankan, aplikasi dapat membuat atau menggunakan:
+The application may create or use:
 
 ```text
 mahasiswa_gui.csv
@@ -10,6 +10,6 @@ absensi_runtime.csv
 attendance_sessions/
 ```
 
-Gunakan `mahasiswa_gui.example.csv` untuk melihat susunan kolom yang dibutuhkan. Salin file tersebut menjadi file lokal, lalu isi hanya dengan data yang memang diizinkan untuk digunakan.
+Use `mahasiswa_gui.example.csv` as a reference for the required columns. Copy it to a local file and add only data that you are authorized to use.
 
-File data runtime sudah dikecualikan melalui `.gitignore` dan tidak boleh dimasukkan ke repository publik.
+Runtime records are excluded by `.gitignore` and should not be committed to a public repository.
