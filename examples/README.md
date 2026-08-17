@@ -1,11 +1,11 @@
-# Gambar Contoh
+# Sample Images
 
-Folder ini disediakan untuk gambar uji lokal. Repository tidak menyertakan foto wajah secara bawaan.
+This directory is intended for local test images. The repository does not include a face photograph by default.
 
-Notebook akan mencari file berikut jika contoh citra statis ingin dijalankan:
+The notebook looks for this optional file when running the still-image example:
 
 ```text
 examples/sample_face.jpg
 ```
 
-Gunakan gambar fiktif, gambar milik sendiri, atau media yang sudah mendapat izin. File contoh lokal tidak perlu di-commit ke repository.
+Use a fictional image, your own image, or media that you have permission to use. The local sample file does not need to be committed.
