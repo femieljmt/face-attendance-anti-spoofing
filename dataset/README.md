@@ -1,8 +1,8 @@
-# Dataset Pengenalan Wajah
+# Face-Recognition Dataset
 
-Foto wajah yang digunakan saat pengembangan tidak dipublikasikan pada repository ini. Dataset harus disiapkan sendiri pada komputer yang menjalankan proyek.
+The face images used during development are not published in this repository. Prepare the dataset locally on the computer that runs the project.
 
-Susunan folder yang dibaca aplikasi:
+The application expects the following directory layout:
 
 ```text
 dataset/
@@ -13,10 +13,10 @@ dataset/
     └── PSD/
 ```
 
-Di dalam setiap kelas, satu identitas dapat ditempatkan pada folder yang labelnya sesuai dengan pemetaan model. Contoh dengan identitas fiktif:
+Within each class, an identity can be stored in a folder whose label matches the recognition model's class mapping. For example, using a fictional identity:
 
 ```text
-dataset/recognition/PCD/STUDENT001_Contoh_Mahasiswa/
+dataset/recognition/PCD/STUDENT001_Sample_Student/
 ```
 
-Nama folder dan `class_indices` harus konsisten dengan model recognition yang digunakan. Jangan mempublikasikan dataset wajah tanpa izin peserta dan dasar penggunaan data yang sesuai.
+The folder labels and `class_indices` files must be consistent with the recognition model. Do not publish face datasets without participant consent and an appropriate basis for using the data.
