@@ -1,58 +1,58 @@
-# Sistem Absensi Wajah dengan Liveness dan Anti-Spoofing
+# Face Attendance System with Liveness Detection and Anti-Spoofing
 
-Repository ini berisi proyek Pengolahan Citra Digital yang saya kerjakan untuk membuat sistem absensi berbasis pengenalan wajah. Selain mengenali identitas, sistem juga memakai liveness challenge dan model anti-spoofing untuk mengurangi kemungkinan absensi menggunakan foto wajah.
+I developed this project for a Digital Image Processing course. It records attendance through face recognition and adds liveness and anti-spoofing checks to reduce attempts made with a photograph.
 
-Aplikasi utamanya menggunakan antarmuka desktop Tkinter. Saya juga menyertakan beberapa script pengujian supaya proses pengenalan wajah dan anti-spoofing dapat diperiksa secara terpisah.
+The main application uses a Tkinter desktop interface. I also kept separate test scripts for face recognition and anti-spoofing so that each part of the vision pipeline can be checked on its own.
 
-> Repository publik ini tidak menyertakan foto mahasiswa, daftar identitas asli, riwayat absensi, pemetaan kelas yang memuat nama, atau model pengenalan wajah yang dilatih menggunakan data tersebut. Penjelasannya tersedia pada [catatan privasi](docs/PRIVACY.md).
+> This public repository does not include student photographs, real identity records, attendance history, class mappings containing names, or recognition models trained with those records. See the [privacy notes](docs/PRIVACY.md) for details.
 
-## Alur sistem
+## How it works
 
 ```mermaid
 flowchart TD
-    A["Frame kamera"] --> B["Deteksi wajah"]
-    B --> C{"Wajah terdeteksi?"}
-    C -- Tidak --> A
-    C -- Ya --> D["Liveness challenge"]
-    D --> E{"Liveness berhasil?"}
-    E -- Tidak --> A
-    E -- Ya --> F["Pemeriksaan anti-spoofing"]
-    F --> G{"Wajah asli?"}
-    G -- Tidak --> H["Ditolak sebagai spoof"]
-    G -- Ya --> I["Pengenalan wajah"]
-    I --> J{"Confidence memenuhi batas?"}
-    J -- Tidak --> K["Tidak dikenali"]
-    J -- Ya --> L["Cocokkan dengan daftar mahasiswa"]
-    L --> M["Catat kehadiran"]
+    A["Camera frame"] --> B["Face detection"]
+    B --> C{"Face detected?"}
+    C -- No --> A
+    C -- Yes --> D["Liveness challenge"]
+    D --> E{"Liveness passed?"}
+    E -- No --> A
+    E -- Yes --> F["Anti-spoofing check"]
+    F --> G{"Real face?"}
+    G -- No --> H["Reject as spoof"]
+    G -- Yes --> I["Face recognition"]
+    I --> J{"Confidence above threshold?"}
+    J -- No --> K["Unknown identity"]
+    J -- Yes --> L["Match against student roster"]
+    L --> M["Record attendance"]
 ```
 
-Urutannya dibuat berlapis. Wajah baru diteruskan ke pengenalan identitas setelah liveness dan anti-spoofing berhasil. Hasil absensi kemudian disimpan berdasarkan sesi dan dapat dibuat menjadi laporan CSV atau Excel.
+The checks are performed in stages. A face reaches identity recognition only after it passes the liveness and anti-spoofing steps. Attendance is then stored by session and can be exported as a CSV or Excel report.
 
-## Struktur repository
+## Repository structure
 
 ```text
 .
-├── run_gui.py              # entry point aplikasi desktop
-├── src/                    # program utama dan script pengujian
-├── models/                 # konfigurasi dan lokasi model lokal
-├── database/               # contoh struktur data mahasiswa
-├── dataset/                # lokasi dataset pengenalan wajah
-├── notebooks/              # demonstrasi pipeline citra
-├── examples/               # lokasi gambar contoh lokal
-├── scripts/check_setup.py  # pemeriksaan file yang dibutuhkan
-└── docs/PRIVACY.md         # catatan privasi data
+├── run_gui.py              # desktop application entry point
+├── src/                    # main programs and component tests
+├── models/                 # local model location and configuration
+├── database/               # example student-record structure
+├── dataset/                # local recognition dataset
+├── notebooks/              # image-processing pipeline demonstration
+├── examples/               # optional local sample image
+├── scripts/check_setup.py  # checks required local files
+└── docs/PRIVACY.md         # privacy and publication notes
 ```
 
-## Persiapan
+## Setup
 
-Clone repository, lalu masuk ke folder proyek:
+Clone the repository and enter the project directory:
 
 ```bash
 git clone https://github.com/femieljmt/face-attendance-anti-spoofing.git
 cd face-attendance-anti-spoofing
 ```
 
-Buat virtual environment.
+Create a virtual environment.
 
 Windows PowerShell:
 
@@ -61,107 +61,107 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-Linux atau Raspberry Pi:
+Linux or Raspberry Pi:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-Pasang dependency:
+Install the dependencies:
 
 ```bash
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-Pada beberapa distribusi Linux, Tkinter perlu dipasang melalui package manager sistem.
+Some Linux distributions require Tkinter to be installed separately through the system package manager.
 
-Virtual environment tidak dimasukkan ke repository karena ukurannya besar dan isinya bergantung pada sistem operasi. Jika environment proyek yang asli masih tersedia, daftar versi package dapat disimpan dengan:
+The virtual environment is not committed because it is large and platform-specific. If the original working environment is still available, its package versions can be recorded with:
 
 ```powershell
 python -m pip freeze > requirements-lock-windows.txt
 ```
 
-## Menyiapkan file lokal
+## Local files required for recognition
 
-Sebelum recognition dijalankan, tempatkan model dan file indeks kelas milik proyek di folder `models/`. Daftar nama file yang dibaca program tersedia pada [models/README.md](models/README.md).
+Before running recognition, place the trained models and class-index files in `models/`. The expected filenames are listed in [models/README.md](models/README.md).
 
-Dataset wajah dan daftar mahasiswa juga harus disiapkan secara lokal. Gunakan [dataset/README.md](dataset/README.md) untuk susunan folder dan [database/README.md](database/README.md) untuk struktur data mahasiswa.
+The face dataset and student roster must also be prepared locally. See [dataset/README.md](dataset/README.md) for the directory layout and [database/README.md](database/README.md) for the student-record format.
 
-Periksa kelengkapan setup dengan:
+Check the setup with:
 
 ```bash
 python scripts/check_setup.py
 ```
 
-## Menjalankan aplikasi
+## Running the application
 
-Entry point yang paling sederhana adalah:
+The simplest entry point is:
 
 ```bash
 python run_gui.py
 ```
 
-Perintah tersebut membuka GUI sesi absensi dan menjalankan backend dari `src/final_attendance_lightweight_raspi.py`.
+This opens the attendance-session interface and starts the backend in `src/final_attendance_lightweight_raspi.py`.
 
-GUI asli juga dapat dijalankan langsung:
+The original GUI script can also be started directly:
 
 ```bash
 python src/attendance_gui_tkinter_session_v8_best_confidence.py
 ```
 
-Contoh menjalankan backend untuk kelas `PCD` dengan kamera indeks `0`:
+Example backend command for the `PCD` class using camera index `0`:
 
 ```bash
 python src/final_attendance_lightweight_raspi.py --kelas PCD --camera 0
 ```
 
-Label kelas yang tersedia pada source saat ini adalah `PCD`, `TA`, `Pempros`, dan `PSD`.
+The current source supports the class labels `PCD`, `TA`, `Pempros`, and `PSD`.
 
-Untuk menjalankan pengenalan wajah tanpa anti-spoofing:
+To run face recognition without anti-spoofing:
 
 ```bash
 python src/final_attendance_lightweight_raspi.py --kelas PCD --camera 0 --recognition_only
 ```
 
-## Menguji komponen secara terpisah
+## Testing individual components
 
-Anti-spoofing melalui webcam:
+Anti-spoofing webcam test:
 
 ```bash
 python src/test_antispoof_mobilenet_webcam_v2.py --camera 0
 ```
 
-Pengenalan wajah saja:
+Face-recognition webcam test:
 
 ```bash
 python src/test_mobilenet_recognition_only.py --kelas PCD --camera 0
 ```
 
-Jika kamera utama tidak berada pada indeks `0`, ubah nilai `--camera`.
+Change `--camera` if the intended camera is not available at index `0`.
 
 ## Jupyter Notebook
 
-File [`notebooks/01_computer_vision_pipeline_demo.ipynb`](notebooks/01_computer_vision_pipeline_demo.ipynb) saya sediakan untuk menjelaskan dependency, preprocessing citra, pencarian model, dan contoh anti-spoofing pada gambar statis.
+[`notebooks/01_computer_vision_pipeline_demo.ipynb`](notebooks/01_computer_vision_pipeline_demo.ipynb) demonstrates dependency checks, image preprocessing, model discovery, and an anti-spoofing example using a still image.
 
-Notebook tersebut bukan pengganti aplikasi utama. Webcam loop, antarmuka Tkinter, subprocess, dan pengelolaan sesi lebih sesuai dijalankan melalui file Python biasa.
+The notebook is not a replacement for the desktop application. Webcam loops, Tkinter state, subprocesses, and attendance sessions are handled more reliably by the Python scripts.
 
-## Batas penggunaan repository publik
+## Limits of the public repository
 
-Source code dan rancangan aplikasi dapat dipelajari dari repository ini, tetapi hasil recognition belum dapat direproduksi hanya dengan melakukan clone. Pengguna tetap memerlukan model pengenalan, pemetaan kelas, dataset, dan daftar mahasiswa yang tidak dipublikasikan karena memuat atau berasal dari data biometrik.
+The source code and application design can be studied from this repository, but recognition cannot be reproduced from a fresh clone alone. It still requires private recognition models, class mappings, a face dataset, and a student roster.
 
-Script pelatihan model dan versi dependency yang benar-benar digunakan pada environment awal juga belum tersedia pada paket ini. Catatan ini membedakan antara menjalankan source aplikasi dan mereproduksi proses pelatihan model.
+The original model-training scripts and an exact dependency lock file are also not included. This distinction is important: running the application source and reproducing the full model-training process are separate tasks.
 
-## Privasi
+## Privacy
 
-Jangan memasukkan file berikut ke repository publik:
+Do not upload the following files to a public repository:
 
-- foto wajah asli;
-- daftar nama atau nomor mahasiswa;
-- laporan dan riwayat absensi;
-- `class_indices_*.json` yang memuat identitas nyata;
-- model pengenalan wajah yang publikasinya belum mendapat izin;
-- virtual environment, cache, dan file hasil runtime.
+- real face images;
+- student names or identification numbers;
+- attendance records and session reports;
+- `class_indices_*.json` files containing real identities;
+- face-recognition models that have not been approved for public release;
+- virtual environments, cache files, and runtime-generated data.
 
-Aturan `.gitignore` pada repository sudah disiapkan untuk mengecualikan kategori tersebut.
+The repository's `.gitignore` file is configured to exclude these files.
