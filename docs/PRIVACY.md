@@ -1,13 +1,15 @@
-# Privacy and Publication Notes
+# Privacy Notes
 
-This project processes facial images and attendance records. A public repository should contain source code and non-sensitive examples, not identifiable student data.
+This project processes face images and attendance records. Both can identify a person, so the public repository contains only source code and examples that do not use real identities.
 
-The following materials from the development workspace should remain private unless every relevant publication requirement has been satisfied:
+Keep the following files private unless their publication has been authorized and all applicable requirements have been met:
 
-- face image datasets;
-- student rosters containing real names or student identifiers;
+- face-image datasets;
+- student rosters containing real names or identification numbers;
 - attendance logs and session reports;
-- class-index mappings that directly identify students;
-- trained face-recognition models derived from identifiable participants.
+- class-index files that connect model labels to students;
+- face-recognition models trained from participant data.
 
-A model file does not visibly list the original images, but a face-recognition model is still derived from biometric training data. Treat it as sensitive project material unless its publication is clearly authorized.
+A trained model does not display its source photographs directly, but it is still derived from biometric data. For that reason, the original recognition models and identity mappings are not included here.
+
+If this project is reused, work only with authorized data, restrict access to local files, and avoid showing participant identities in public screenshots or examples.

@@ -1,10 +1,8 @@
-# Model Files
+# Required Models
 
-The original package contained trained face-recognition models and class-index mappings tied to identifiable students. Those files are intentionally excluded from this public-ready package.
+The original face-recognition models and class-index files are not included because they are connected to student identities. Copy the project's private model files into this directory before running recognition.
 
-## Expected private model files
-
-Place your working model files locally in this directory before running recognition:
+The application expects these filenames:
 
 ```text
 models/
@@ -20,8 +18,6 @@ models/
 └── class_indices_psd.json
 ```
 
-`*.h5` and real `class_indices_*.json` files are ignored by Git in this package.
+The original `*.h5` and `class_indices_*.json` files are excluded by `.gitignore`. `class_indices.example.json` shows the expected JSON structure with fictional identities.
 
-`class_indices.example.json` demonstrates the expected JSON structure using fictional identities.
-
-The anti-spoofing threshold JSON is included because the supplied file contained no student identity data. Model licensing and dataset provenance should still be verified before publishing any trained model binary.
+`anti_spoofing_threshold.json` remains in the repository because the supplied file does not contain student identities. Before publishing any other trained model, verify the dataset source, permission to release it, and its license terms.

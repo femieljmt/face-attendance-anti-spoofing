@@ -1,8 +1,8 @@
-# Recognition Dataset
+# Face-Recognition Dataset
 
-Real face images are intentionally excluded from this public-ready package.
+The face images used during development are not published in this repository. Prepare the dataset locally on the computer that runs the project.
 
-At runtime the project expects recognition data under:
+The application expects the following directory layout:
 
 ```text
 dataset/
@@ -13,10 +13,10 @@ dataset/
     └── PSD/
 ```
 
-Each identity may be represented by a subdirectory matching the label used by the recognition model, for example:
+Within each class, an identity can be stored in a folder whose label matches the recognition model's class mapping. For example, using a fictional identity:
 
 ```text
 dataset/recognition/PCD/STUDENT001_Sample_Student/
 ```
 
-Do not publish face datasets without an appropriate legal basis and participant permission.
+The folder labels and `class_indices` files must be consistent with the recognition model. Do not publish face datasets without participant consent and an appropriate basis for using the data.

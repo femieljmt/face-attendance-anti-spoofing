@@ -1,92 +1,58 @@
-# Realtime Face Attendance System with Liveness Detection and Anti-Spoofing
+# Face Attendance System with Liveness Detection and Anti-Spoofing
 
-A computer-vision attendance application that combines **face detection**, **liveness challenges**, **MobileNet-based anti-spoofing**, **MobileNet-based face recognition**, and **session-based attendance reporting**.
+I developed this project for a Digital Image Processing course. It records attendance through face recognition and adds liveness and anti-spoofing checks to reduce attempts made with a photograph.
 
-The project was developed as a Digital Image Processing project and includes a Tkinter desktop interface plus standalone scripts for testing recognition and anti-spoofing components.
+The main application uses a Tkinter desktop interface. I also kept separate test scripts for face recognition and anti-spoofing so that each part of the vision pipeline can be checked on its own.
 
-> **Privacy note:** the public-ready package intentionally excludes real student rosters, face datasets, attendance history, class-index files containing student identities, and trained face-recognition models. See [`docs/PRIVACY.md`](docs/PRIVACY.md).
+> This public repository does not include student photographs, real identity records, attendance history, class mappings containing names, or recognition models trained with those records. See the [privacy notes](docs/PRIVACY.md) for details.
 
-## System Pipeline
+## How it works
 
 ```mermaid
 flowchart TD
-    A[Camera Frame] --> B[Face Detection]
-    B --> C{Face detected?}
+    A["Camera frame"] --> B["Face detection"]
+    B --> C{"Face detected?"}
     C -- No --> A
-    C -- Yes --> D[Liveness Challenge]
-    D --> E{Liveness passed?}
+    C -- Yes --> D["Liveness challenge"]
+    D --> E{"Liveness passed?"}
     E -- No --> A
-    E -- Yes --> F[Anti-Spoofing MobileNet]
-    F --> G{Real face?}
-    G -- No --> H[Reject as spoof]
-    G -- Yes --> I[Face Recognition MobileNet]
-    I --> J{Confidence above threshold?}
-    J -- No --> K[Unknown / rejected]
-    J -- Yes --> L[Validate identity against roster]
-    L --> M[Record attendance]
-    M --> N[Session CSV / Excel report]
+    E -- Yes --> F["Anti-spoofing check"]
+    F --> G{"Real face?"}
+    G -- No --> H["Reject as spoof"]
+    G -- Yes --> I["Face recognition"]
+    I --> J{"Confidence above threshold?"}
+    J -- No --> K["Unknown identity"]
+    J -- Yes --> L["Match against student roster"]
+    L --> M["Record attendance"]
 ```
 
-## Main Components
+The checks are performed in stages. A face reaches identity recognition only after it passes the liveness and anti-spoofing steps. Attendance is then stored by session and can be exported as a CSV or Excel report.
+
+## Repository structure
 
 ```text
 .
-├── run_gui.py
-├── requirements.txt
-├── src/
-│   ├── attendance_gui_tkinter_session_v8_best_confidence.py
-│   ├── final_attendance_lightweight_raspi.py
-│   ├── final_liveness_recognition_only_no_antispoof.py
-│   ├── test_antispoof_mobilenet_webcam_v2.py
-│   ├── test_mobilenet_recognition_only.py
-│   └── utility scripts...
-├── models/
-│   ├── README.md
-│   ├── anti_spoofing_threshold.json
-│   └── class_indices.example.json
-├── database/
-│   ├── README.md
-│   └── mahasiswa_gui.example.csv
-├── dataset/
-│   └── README.md
-├── notebooks/
-│   └── 01_computer_vision_pipeline_demo.ipynb
-├── scripts/
-│   └── check_setup.py
-└── docs/
-    └── PRIVACY.md
+├── run_gui.py              # desktop application entry point
+├── src/                    # main programs and component tests
+├── models/                 # local model location and configuration
+├── database/               # example student-record structure
+├── dataset/                # local recognition dataset
+├── notebooks/              # image-processing pipeline demonstration
+├── examples/               # optional local sample image
+├── scripts/check_setup.py  # checks required local files
+└── docs/PRIVACY.md         # privacy and publication notes
 ```
-
-## Why the Virtual Environment Is Not Included
-
-A Python virtual environment can easily occupy hundreds of megabytes or more than 1 GB. It should **not** be committed to Git. The environment is rebuilt from dependency metadata instead.
-
-This package contains a `requirements.txt` listing the direct third-party dependencies inferred from the supplied source code. The exact package versions could not be reconstructed because the original environment was not part of the supplied archive.
-
-If you still have the working environment, generate a version snapshot before publishing:
-
-```powershell
-python -m pip freeze > requirements-lock-windows.txt
-```
-
-Or, while that environment is activated, run:
-
-```powershell
-.\scripts\export_environment.ps1
-```
-
-That file gives other users a much better chance of reproducing the exact working environment.
 
 ## Setup
 
-### 1. Clone the repository
+Clone the repository and enter the project directory:
 
 ```bash
-git clone <your-repository-url>
-cd <repository-folder>
+git clone https://github.com/femieljmt/face-attendance-anti-spoofing.git
+cd face-attendance-anti-spoofing
 ```
 
-### 2. Create a virtual environment
+Create a virtual environment.
 
 Windows PowerShell:
 
@@ -95,37 +61,41 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-Linux / Raspberry Pi:
+Linux or Raspberry Pi:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### 3. Install dependencies
+Install the dependencies:
 
 ```bash
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-Tkinter is included with many Windows Python installations. On Linux it may need to be installed through the operating-system package manager.
+Some Linux distributions require Tkinter to be installed separately through the system package manager.
 
-### 4. Add your private model files
+The virtual environment is not committed because it is large and platform-specific. If the original working environment is still available, its package versions can be recorded with:
 
-Copy the trained models and real class-index mappings from your working project into `models/`. The expected filenames are documented in [`models/README.md`](models/README.md).
+```powershell
+python -m pip freeze > requirements-lock-windows.txt
+```
 
-You can check the setup with:
+## Local files required for recognition
+
+Before running recognition, place the trained models and class-index files in `models/`. The expected filenames are listed in [models/README.md](models/README.md).
+
+The face dataset and student roster must also be prepared locally. See [dataset/README.md](dataset/README.md) for the directory layout and [database/README.md](database/README.md) for the student-record format.
+
+Check the setup with:
 
 ```bash
 python scripts/check_setup.py
 ```
 
-### 5. Prepare the roster and dataset locally
-
-Real face datasets and student rosters are not tracked by Git. Create or restore your local data under `dataset/recognition/` and `database/` as required by your trained recognition models.
-
-## Run the Desktop Application
+## Running the application
 
 The simplest entry point is:
 
@@ -133,36 +103,29 @@ The simplest entry point is:
 python run_gui.py
 ```
 
-This starts the Tkinter session GUI. Internally, the GUI launches the attendance backend from `src/final_attendance_lightweight_raspi.py`.
+This opens the attendance-session interface and starts the backend in `src/final_attendance_lightweight_raspi.py`.
 
-You can also run the original GUI script directly:
+The original GUI script can also be started directly:
 
 ```bash
 python src/attendance_gui_tkinter_session_v8_best_confidence.py
 ```
 
-## Run the Backend Directly
-
-Example for class `PCD` using camera index `0`:
+Example backend command for the `PCD` class using camera index `0`:
 
 ```bash
 python src/final_attendance_lightweight_raspi.py --kelas PCD --camera 0
 ```
 
-Supported class labels in the supplied source are:
+The current source supports the class labels `PCD`, `TA`, `Pempros`, and `PSD`.
 
-- `PCD`
-- `TA`
-- `Pempros`
-- `PSD`
-
-Recognition-only mode:
+To run face recognition without anti-spoofing:
 
 ```bash
 python src/final_attendance_lightweight_raspi.py --kelas PCD --camera 0 --recognition_only
 ```
 
-## Component Tests
+## Testing individual components
 
 Anti-spoofing webcam test:
 
@@ -170,53 +133,35 @@ Anti-spoofing webcam test:
 python src/test_antispoof_mobilenet_webcam_v2.py --camera 0
 ```
 
-Recognition-only webcam test:
+Face-recognition webcam test:
 
 ```bash
 python src/test_mobilenet_recognition_only.py --kelas PCD --camera 0
 ```
 
+Change `--camera` if the intended camera is not available at index `0`.
+
 ## Jupyter Notebook
 
-The application itself remains a normal Python/Tkinter application because webcam loops, desktop GUI state, subprocess execution, and attendance sessions are better handled by `.py` files.
+[`notebooks/01_computer_vision_pipeline_demo.ipynb`](notebooks/01_computer_vision_pipeline_demo.ipynb) demonstrates dependency checks, image preprocessing, model discovery, and an anti-spoofing example using a still image.
 
-A notebook is included as a **technical demonstration**, not as a replacement for the application:
+The notebook is not a replacement for the desktop application. Webcam loops, Tkinter state, subprocesses, and attendance sessions are handled more reliably by the Python scripts.
 
-```text
-notebooks/01_computer_vision_pipeline_demo.ipynb
-```
+## Limits of the public repository
 
-It documents dependency checks, image preprocessing, private model discovery, and a static-image anti-spoofing example that can be run after you provide your own sample image and local model file.
+The source code and application design can be studied from this repository, but recognition cannot be reproduced from a fresh clone alone. It still requires private recognition models, class mappings, a face dataset, and a student roster.
 
-## Data and Model Publication Policy
+The original model-training scripts and an exact dependency lock file are also not included. This distinction is important: running the application source and reproducing the full model-training process are separate tasks.
 
-Do not commit:
+## Privacy
 
-- `.venv/`;
+Do not upload the following files to a public repository:
+
 - real face images;
-- real student rosters;
-- attendance/session CSV files;
-- `class_indices_*.json` containing real identities;
-- private trained face-recognition models;
-- backup ZIP files or runtime history.
+- student names or identification numbers;
+- attendance records and session reports;
+- `class_indices_*.json` files containing real identities;
+- face-recognition models that have not been approved for public release;
+- virtual environments, cache files, and runtime-generated data.
 
-The supplied `.gitignore` already excludes these categories.
-
-## Current Reproducibility Limitations
-
-The provided archive did not include:
-
-1. the original virtual environment or an exact dependency lock file;
-2. model-training scripts referenced by comments in the application;
-3. a public-safe sample face image;
-4. authorization/provenance documentation for publishing the trained model binaries.
-
-Therefore this repository package is suitable for publishing the **application source and project design**, while exact model reproduction still depends on private development artifacts.
-
-## Suggested Next Improvements
-
-- export the exact working environment to `requirements-lock-windows.txt`;
-- add training/evaluation scripts if they are available;
-- add screenshots of the GUI using fictional or consented data;
-- add quantitative recognition and anti-spoofing evaluation results;
-- gradually split the large GUI/backend modules into smaller `vision`, `attendance`, and `gui` modules without changing working behavior.
+The repository's `.gitignore` file is configured to exclude these files.

@@ -1,13 +1,15 @@
-# Runtime Database Directory
+# Student Records and Attendance Output
 
-This directory is intentionally distributed without real student or attendance data.
+The application uses this directory to read the student roster and store attendance results. Real data is not included because these files may contain names, student identification numbers, recognition results, timestamps, and session details.
 
-The application may create files such as:
+The application may create or use:
 
-- `mahasiswa_gui.csv`
-- `absensi_runtime.csv`
-- `attendance_sessions/`
+```text
+mahasiswa_gui.csv
+absensi_runtime.csv
+attendance_sessions/
+```
 
-These files can contain names, student identifiers, recognition results, timestamps, and attendance information. They are ignored by Git and should not be committed to a public repository.
+Use `mahasiswa_gui.example.csv` as a reference for the required columns. Copy it to a local file and add only data that you are authorized to use.
 
-Use `mahasiswa_gui.example.csv` only as a schema example.
+Runtime records are excluded by `.gitignore` and should not be committed to a public repository.
